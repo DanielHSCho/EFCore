@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MMO_EFCore
 {
+    [Table("Item")]
     public class Item
     {
         // 이름Id -> PK
