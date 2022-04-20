@@ -87,7 +87,31 @@ namespace MMO_EFCore
 
         public static void ExplicitLoading()
         {
-          
+            Console.WriteLine("길드 이름을 입력하세요");
+            Console.WriteLine("> ");
+            string name = Console.ReadLine();
+
+            using (var db = new AppDbContext()) {
+                // Explicit방식은 AsNoTracking 사용불가
+                Guild guild = db.Guilds
+                    .Where(g => g.GuildName == name)
+                    .First();
+
+                // 명시적 - 단계적 추출
+                db.Entry(guild)
+                    .Collection(g => g.Members)
+                    .Load();
+
+                foreach(Player player in guild.Members) {
+                    db.Entry(player)
+                        .Reference(p => p.Item)
+                        .Load();
+                }
+
+                foreach (Player player in guild.Members) {
+                    Console.WriteLine($"TemplateId({player.Item.TemplateId}) Owner({player.Name})");
+                }
+            }
         }
 
         public static void SelectLoading()
