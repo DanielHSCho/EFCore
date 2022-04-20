@@ -59,7 +59,9 @@ namespace MMO_EFCore
         {
             using(var db = new AppDbContext()) {
                 // AsNoTraking : ReadOnly << Tracking Snapshot - 데이터 변경 탐지 기능
-                foreach(Item item in db.Items.AsNoTracking()) {
+                // Include : Eager Loading (즉시 로딩)
+                foreach(Item item in db.Items.AsNoTracking()
+                    .Include(i=>i.Owner)) {
                     Console.WriteLine($"TemplateId({item.TemplateId}) Owner({item.Owner.PlayerId}) Created({item.CreateDate})");
                 }
             }
