@@ -20,9 +20,34 @@ namespace MMO_EFCore
                 // DB가 존재하지 않으면 삭제하고 생성
                 db.Database.EnsureCreated();
 
+                CreateTestData(db);
                 Console.WriteLine("DB Initialized");
             };
         }
 
+        public static void CreateTestData(AppDbContext db)
+        {
+            var player = new Player() {
+                Name = "Daniel"
+            };
+
+            List<Item> items = new List<Item>() {
+                new Item() {
+                    TemplateId = 101,
+                    CreateDate = DateTime.Now,
+                    Owner = player
+                },
+                new Item() {
+                    TemplateId = 102,
+                    CreateDate = DateTime.Now,
+                    Owner = player
+                },
+                new Item() {
+                    TemplateId = 103,
+                    CreateDate = DateTime.Now,
+                    Owner = new Player() {Name = "Hellena"}
+                }
+            };
+        }
     }
 }
