@@ -20,6 +20,7 @@ namespace MMO_EFCore
                         DbCommands.InitializeDB(forceReset: false);
                         break;
                     case "1":
+                        DbCommands.ReadAll();
                         break;
                     case "2":
                         break;

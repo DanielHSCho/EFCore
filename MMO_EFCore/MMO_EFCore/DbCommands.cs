@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,16 @@ namespace MMO_EFCore
             // 여러개를 한번에 추가할때 (AddRange)
             db.Items.AddRange(items);
             db.SaveChanges();
+        }
+
+        public static void ReadAll()
+        {
+            using(var db = new AppDbContext()) {
+                // AsNoTraking : ReadOnly << Tracking Snapshot - 데이터 변경 탐지 기능
+                foreach(Item item in db.Items.AsNoTracking()) {
+                    Console.WriteLine($"TemplateId({item.TemplateId}) Owner({item.Owner.PlayerId}) Created({item.CreateDate})");
+                }
+            }
         }
     }
 }
