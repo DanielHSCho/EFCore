@@ -19,6 +19,7 @@ namespace MMO_EFCore
                         DbCommands.InitializeDB(forceReset: true);
                         break;
                     case "1":
+                        DbCommands.UpdateTest();
                         break;
                     case "2":
                         break;

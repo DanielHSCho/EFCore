@@ -65,6 +65,14 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
+        public static void UpdateTest()
+        {
+            using(AppDbContext db = new AppDbContext()) {
+                var guild = db.Guilds.Single(g => g.GuildName == "Wizards");
+                guild.GuildName = "Murgles";
+                db.SaveChanges();
+            }
+        }
 
         //// 특정 길드에 있는 길드원의 모든 소지 아이템을 로드
         //public static void EagerLoading()
