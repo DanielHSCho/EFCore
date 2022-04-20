@@ -38,4 +38,12 @@ namespace MMO_EFCore
         public string GuildName { get; set; }
         public ICollection<Player> Members { get; set; }
     }
+
+    // Data Transfer Object
+    // TODO : 다른 파일로 분리해두는 것도 좋음
+    public class GuildDto
+    {
+        public string Name { get; set; }
+        public int MemberCount { get; set; }
+    }
 }
