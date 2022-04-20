@@ -14,9 +14,11 @@ namespace MMO_EFCore
         public DateTime CreateDate { get; set; }
 
         // 다른 클래스 참조 -> FK (Navigational Property)
+        [ForeignKey("OwnerId")]
         public Player Owner { get; set; }
     }
 
+    [Table("Player")]
     // 클래스 이름 = 테이블 이름 = Player
     public class Player
     {
@@ -24,6 +26,16 @@ namespace MMO_EFCore
         public int PlayerId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Item> Items { get; set; }
+        //public ICollection<Item> Items { get; set; }
+        public Item Item { get; set; } // 1:1 관계형성용
+        public Guild Guild { get; set; }
+    }
+
+    [Table("Guild")]
+    public class Guild
+    {
+        public int GuildId { get; set; }
+        public string GuildName { get; set; }
+        public ICollection<Player> Members { get; set; }
     }
 }

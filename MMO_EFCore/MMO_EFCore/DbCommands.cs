@@ -29,30 +29,39 @@ namespace MMO_EFCore
 
         public static void CreateTestData(AppDbContext db)
         {
-            var player = new Player() {
-                Name = "Daniel"
-            };
+            var daniel = new Player() { Name = "Daniel" };
+            var hellena = new Player() { Name = "Hellena" };
+            var newt = new Player() { Name = "Newt" };
+
 
             List<Item> items = new List<Item>() {
                 new Item() {
                     TemplateId = 101,
                     CreateDate = DateTime.Now,
-                    Owner = player
+                    Owner = daniel
                 },
                 new Item() {
                     TemplateId = 102,
                     CreateDate = DateTime.Now,
-                    Owner = player
+                    Owner = hellena
                 },
                 new Item() {
                     TemplateId = 103,
                     CreateDate = DateTime.Now,
-                    Owner = new Player() {Name = "Hellena"}
+                    Owner = newt
+                }
+            };
+
+            Guild guild = new Guild() {
+                GuildName = "Wizards",
+                Members = new List<Player>() {
+                    daniel, hellena, newt
                 }
             };
 
             // 여러개를 한번에 추가할때 (AddRange)
             db.Items.AddRange(items);
+            db.Guilds.Add(guild);
             db.SaveChanges();
         }
 
