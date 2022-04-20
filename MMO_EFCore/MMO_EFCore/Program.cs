@@ -11,6 +11,7 @@ namespace MMO_EFCore
             Console.WriteLine("명령어를 입력하세요");
             Console.WriteLine("[0] Force Reset");
             Console.WriteLine("[1] Read All");
+            Console.WriteLine("[2] Update Date");
 
             while (true) {
                 Console.Write("> ");
@@ -23,6 +24,7 @@ namespace MMO_EFCore
                         DbCommands.ReadAll();
                         break;
                     case "2":
+                        DbCommands.UpdateDate();
                         break;
                     case "3":
                         break;

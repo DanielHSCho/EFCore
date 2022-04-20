@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MMO_EFCore
@@ -65,6 +66,28 @@ namespace MMO_EFCore
                     Console.WriteLine($"TemplateId({item.TemplateId}) Owner({item.Owner.PlayerId}) Created({item.CreateDate})");
                 }
             }
+        }
+
+        public static void UpdateDate()
+        {
+            Console.WriteLine("Input Player Name");
+            Console.WriteLine("> ");
+
+            string name = Console.ReadLine();
+
+            // 링큐 - Where
+            using(var db = new AppDbContext()) {
+                var items = db.Items.Include(i => i.Owner)
+                    .Where(i => i.Owner.Name == name);
+
+                foreach(Item item in items) {
+                    item.CreateDate = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+
+            ReadAll();
         }
     }
 }
