@@ -12,6 +12,7 @@ namespace MMO_EFCore
             Console.WriteLine("[0] Force Reset");
             Console.WriteLine("[1] Read All");
             Console.WriteLine("[2] Update Date");
+            Console.WriteLine("[3] DeleteItem");
 
             while (true) {
                 Console.Write("> ");
@@ -27,6 +28,7 @@ namespace MMO_EFCore
                         DbCommands.UpdateDate();
                         break;
                     case "3":
+                        DbCommands.DeleteItem();
                         break;
                 }
 

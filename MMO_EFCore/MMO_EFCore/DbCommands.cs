@@ -89,5 +89,24 @@ namespace MMO_EFCore
 
             ReadAll();
         }
+
+        public static void DeleteItem()
+        {
+            Console.WriteLine("Input Player Name");
+            Console.WriteLine("> ");
+
+            string name = Console.ReadLine();
+
+            using (var db = new AppDbContext()) {
+                var items = db.Items.Include(i => i.Owner)
+                    .Where(i => i.Owner.Name == name);
+
+                
+                db.Items.RemoveRange(items);
+                db.SaveChanges();
+            }
+
+            ReadAll();
+        }
     }
 }
