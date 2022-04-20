@@ -125,10 +125,7 @@ namespace MMO_EFCore
             using(var db = new AppDbContext()) {
                 var info = db.Guilds
                     .Where(g => g.GuildName == name)
-                    .Select(g=> new GuildDto() {
-                        Name = g.GuildName,
-                        MemberCount = g.Members.Count
-                    })
+                    .MapGuildToDto()
                     .First();
 
                 Console.WriteLine($"GuildName({info.Name}), MemberCount({info.MemberCount})");
