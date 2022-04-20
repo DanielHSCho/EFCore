@@ -56,34 +56,54 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
-        public static void ReadAll()
+        public static void EagerLoading()
         {
-            using(var db = new AppDbContext()) {
-                // AsNoTraking : ReadOnly << Tracking Snapshot - 데이터 변경 탐지 기능
-                // Include : Eager Loading (즉시 로딩)
-                foreach(Item item in db.Items.AsNoTracking()
-                    .Include(i=>i.Owner)) {
+            using (var db = new AppDbContext()) {
+                foreach (Item item in db.Items.AsNoTracking()
+                    .Include(i => i.Owner)) {
                     Console.WriteLine($"TemplateId({item.TemplateId}) Owner({item.Owner.PlayerId}) Created({item.CreateDate})");
                 }
             }
         }
 
-        public static void ShowItems()
+        public static void ExplicitLoading()
         {
-            Console.WriteLine("플레이어 이름 입력하세요");
-            Console.WriteLine("> ");
-            string name = Console.ReadLine();
-
-            using(var db = new AppDbContext()) {
-                foreach(Player player in db.Players.AsNoTracking()
-                    .Where(p => p.Name == name)
-                    .Include(p => p.Items)) {
-                    foreach(Item item in player.Items) {
-                        Console.WriteLine($"{item.TemplateId}");
-                    }
-                }
-            }
+          
         }
+
+        public static void SelectLoading()
+        {
+           
+        }
+
+        //public static void ReadAll()
+        //{
+        //    using(var db = new AppDbContext()) {
+        //        // AsNoTraking : ReadOnly << Tracking Snapshot - 데이터 변경 탐지 기능
+        //        // Include : Eager Loading (즉시 로딩)
+        //        foreach(Item item in db.Items.AsNoTracking()
+        //            .Include(i=>i.Owner)) {
+        //            Console.WriteLine($"TemplateId({item.TemplateId}) Owner({item.Owner.PlayerId}) Created({item.CreateDate})");
+        //        }
+        //    }
+        //}
+
+        //public static void ShowItems()
+        //{
+        //    Console.WriteLine("플레이어 이름 입력하세요");
+        //    Console.WriteLine("> ");
+        //    string name = Console.ReadLine();
+
+        //    using(var db = new AppDbContext()) {
+        //        foreach(Player player in db.Players.AsNoTracking()
+        //            .Where(p => p.Name == name)
+        //            .Include(p => p.Items)) {
+        //            foreach(Item item in player.Items) {
+        //                Console.WriteLine($"{item.TemplateId}");
+        //            }
+        //        }
+        //    }
+        //}
 
         //public static void UpdateDate()
         //{
@@ -118,7 +138,7 @@ namespace MMO_EFCore
         //        var items = db.Items.Include(i => i.Owner)
         //            .Where(i => i.Owner.Name == name);
 
-                
+
         //        db.Items.RemoveRange(items);
         //        db.SaveChanges();
         //    }
