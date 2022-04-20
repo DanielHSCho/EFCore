@@ -68,6 +68,23 @@ namespace MMO_EFCore
             }
         }
 
+        public static void ShowItems()
+        {
+            Console.WriteLine("플레이어 이름 입력하세요");
+            Console.WriteLine("> ");
+            string name = Console.ReadLine();
+
+            using(var db = new AppDbContext()) {
+                foreach(Player player in db.Players.AsNoTracking()
+                    .Where(p => p.Name == name)
+                    .Include(p => p.Items)) {
+                    foreach(Item item in player.Items) {
+                        Console.WriteLine($"{item.TemplateId}");
+                    }
+                }
+            }
+        }
+
         //public static void UpdateDate()
         //{
         //    Console.WriteLine("Input Player Name");
