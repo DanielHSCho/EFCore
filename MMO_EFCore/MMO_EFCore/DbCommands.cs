@@ -65,72 +65,73 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
-        // 특정 길드에 있는 길드원의 모든 소지 아이템을 로드
-        public static void EagerLoading()
-        {
-            Console.WriteLine("길드 이름을 입력하세요");
-            Console.WriteLine("> ");
-            string name = Console.ReadLine();
 
-            using (var db = new AppDbContext()) {
-                Guild guild = db.Guilds.AsNoTracking()
-                    .Where(g => g.GuildName == name)
-                        .Include(g => g.Members) //Eager로딩
-                            .ThenInclude(p => p.Item)
-                    .First();
+        //// 특정 길드에 있는 길드원의 모든 소지 아이템을 로드
+        //public static void EagerLoading()
+        //{
+        //    Console.WriteLine("길드 이름을 입력하세요");
+        //    Console.WriteLine("> ");
+        //    string name = Console.ReadLine();
 
-                foreach(Player player in guild.Members) {
-                    Console.WriteLine($"TemplateId({player.Item.TemplateId}) Owner({player.Name})");
-                }
-            }
-        }
+        //    using (var db = new AppDbContext()) {
+        //        Guild guild = db.Guilds.AsNoTracking()
+        //            .Where(g => g.GuildName == name)
+        //                .Include(g => g.Members) //Eager로딩
+        //                    .ThenInclude(p => p.Item)
+        //            .First();
 
-        public static void ExplicitLoading()
-        {
-            Console.WriteLine("길드 이름을 입력하세요");
-            Console.WriteLine("> ");
-            string name = Console.ReadLine();
+        //        foreach(Player player in guild.Members) {
+        //            Console.WriteLine($"TemplateId({player.Item.TemplateId}) Owner({player.Name})");
+        //        }
+        //    }
+        //}
 
-            using (var db = new AppDbContext()) {
-                // Explicit방식은 AsNoTracking 사용불가
-                Guild guild = db.Guilds
-                    .Where(g => g.GuildName == name)
-                    .First();
+        //public static void ExplicitLoading()
+        //{
+        //    Console.WriteLine("길드 이름을 입력하세요");
+        //    Console.WriteLine("> ");
+        //    string name = Console.ReadLine();
 
-                // 명시적 - 단계적 추출
-                db.Entry(guild)
-                    .Collection(g => g.Members)
-                    .Load();
+        //    using (var db = new AppDbContext()) {
+        //        // Explicit방식은 AsNoTracking 사용불가
+        //        Guild guild = db.Guilds
+        //            .Where(g => g.GuildName == name)
+        //            .First();
 
-                foreach(Player player in guild.Members) {
-                    db.Entry(player)
-                        .Reference(p => p.Item)
-                        .Load();
-                }
+        //        // 명시적 - 단계적 추출
+        //        db.Entry(guild)
+        //            .Collection(g => g.Members)
+        //            .Load();
 
-                foreach (Player player in guild.Members) {
-                    Console.WriteLine($"TemplateId({player.Item.TemplateId}) Owner({player.Name})");
-                }
-            }
-        }
+        //        foreach(Player player in guild.Members) {
+        //            db.Entry(player)
+        //                .Reference(p => p.Item)
+        //                .Load();
+        //        }
 
-        // 특정 길드의 길드원의 수 구하기
-        // SELECT COUNT (*)
-        public static void SelectLoading()
-        {
-            Console.WriteLine("길드 이름을 입력하세요");
-            Console.WriteLine("> ");
-            string name = Console.ReadLine();
+        //        foreach (Player player in guild.Members) {
+        //            Console.WriteLine($"TemplateId({player.Item.TemplateId}) Owner({player.Name})");
+        //        }
+        //    }
+        //}
 
-            using(var db = new AppDbContext()) {
-                var info = db.Guilds
-                    .Where(g => g.GuildName == name)
-                    .MapGuildToDto()
-                    .First();
+        //// 특정 길드의 길드원의 수 구하기
+        //// SELECT COUNT (*)
+        //public static void SelectLoading()
+        //{
+        //    Console.WriteLine("길드 이름을 입력하세요");
+        //    Console.WriteLine("> ");
+        //    string name = Console.ReadLine();
 
-                Console.WriteLine($"GuildName({info.Name}), MemberCount({info.MemberCount})");
-            }
-        }
+        //    using(var db = new AppDbContext()) {
+        //        var info = db.Guilds
+        //            .Where(g => g.GuildName == name)
+        //            .MapGuildToDto()
+        //            .First();
+
+        //        Console.WriteLine($"GuildName({info.Name}), MemberCount({info.MemberCount})");
+        //    }
+        //}
 
         //public static void ReadAll()
         //{
