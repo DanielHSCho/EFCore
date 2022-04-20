@@ -65,12 +65,22 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
+        // 특정 길드에 있는 길드원의 모든 소지 아이템을 로드
         public static void EagerLoading()
         {
+            Console.WriteLine("길드 이름을 입력하세요");
+            Console.WriteLine("> ");
+            string name = Console.ReadLine();
+
             using (var db = new AppDbContext()) {
-                foreach (Item item in db.Items.AsNoTracking()
-                    .Include(i => i.Owner)) {
-                    Console.WriteLine($"TemplateId({item.TemplateId}) Owner({item.Owner.PlayerId}) Created({item.CreateDate})");
+                Guild guild = db.Guilds.AsNoTracking()
+                    .Where(g => g.GuildName == name)
+                        .Include(g => g.Members) //Eager로딩
+                            .ThenInclude(p => p.Item)
+                    .First();
+
+                foreach(Player player in guild.Members) {
+                    Console.WriteLine($"TemplateId({player.Item.TemplateId}) Owner({player.Name})");
                 }
             }
         }
