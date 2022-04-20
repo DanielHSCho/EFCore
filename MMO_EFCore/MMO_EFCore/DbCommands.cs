@@ -114,9 +114,25 @@ namespace MMO_EFCore
             }
         }
 
+        // 특정 길드의 길드원의 수 구하기
+        // SELECT COUNT (*)
         public static void SelectLoading()
         {
-           
+            Console.WriteLine("길드 이름을 입력하세요");
+            Console.WriteLine("> ");
+            string name = Console.ReadLine();
+
+            using(var db = new AppDbContext()) {
+                var info = db.Guilds
+                    .Where(g => g.GuildName == name)
+                    .Select(g=> new {
+                        Name = g.GuildName,
+                        MemberCount = g.Members.Count
+                    })
+                    .First();
+
+                Console.WriteLine($"GuildName({info.Name}), MemberCount({info.MemberCount})");
+            }
         }
 
         //public static void ReadAll()
