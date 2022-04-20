@@ -68,45 +68,45 @@ namespace MMO_EFCore
             }
         }
 
-        public static void UpdateDate()
-        {
-            Console.WriteLine("Input Player Name");
-            Console.WriteLine("> ");
+        //public static void UpdateDate()
+        //{
+        //    Console.WriteLine("Input Player Name");
+        //    Console.WriteLine("> ");
 
-            string name = Console.ReadLine();
+        //    string name = Console.ReadLine();
 
-            // 링큐 - Where
-            using(var db = new AppDbContext()) {
-                var items = db.Items.Include(i => i.Owner)
-                    .Where(i => i.Owner.Name == name);
+        //    // 링큐 - Where
+        //    using(var db = new AppDbContext()) {
+        //        var items = db.Items.Include(i => i.Owner)
+        //            .Where(i => i.Owner.Name == name);
 
-                foreach(Item item in items) {
-                    item.CreateDate = DateTime.Now;
-                }
+        //        foreach(Item item in items) {
+        //            item.CreateDate = DateTime.Now;
+        //        }
 
-                db.SaveChanges();
-            }
+        //        db.SaveChanges();
+        //    }
 
-            ReadAll();
-        }
+        //    ReadAll();
+        //}
 
-        public static void DeleteItem()
-        {
-            Console.WriteLine("Input Player Name");
-            Console.WriteLine("> ");
+        //public static void DeleteItem()
+        //{
+        //    Console.WriteLine("Input Player Name");
+        //    Console.WriteLine("> ");
 
-            string name = Console.ReadLine();
+        //    string name = Console.ReadLine();
 
-            using (var db = new AppDbContext()) {
-                var items = db.Items.Include(i => i.Owner)
-                    .Where(i => i.Owner.Name == name);
+        //    using (var db = new AppDbContext()) {
+        //        var items = db.Items.Include(i => i.Owner)
+        //            .Where(i => i.Owner.Name == name);
 
                 
-                db.Items.RemoveRange(items);
-                db.SaveChanges();
-            }
+        //        db.Items.RemoveRange(items);
+        //        db.SaveChanges();
+        //    }
 
-            ReadAll();
-        }
+        //    ReadAll();
+        //}
     }
 }

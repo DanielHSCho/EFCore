@@ -19,16 +19,14 @@ namespace MMO_EFCore
                 string command = Console.ReadLine();
                 switch (command) {
                     case "0":
-                        DbCommands.InitializeDB(forceReset: false);
+                        DbCommands.InitializeDB(forceReset: true);
                         break;
                     case "1":
                         DbCommands.ReadAll();
                         break;
                     case "2":
-                        DbCommands.UpdateDate();
                         break;
                     case "3":
-                        DbCommands.DeleteItem();
                         break;
                 }
 
