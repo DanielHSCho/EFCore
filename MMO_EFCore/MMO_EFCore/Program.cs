@@ -6,7 +6,7 @@ namespace MMO_EFCore
     {
         static void Main(string[] args)
         {
-            DbCommands.InitializeDB(forceReset: true);
+            DbCommands.InitializeDB(forceReset: false);
         }
     }
 }

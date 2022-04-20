@@ -48,6 +48,10 @@ namespace MMO_EFCore
                     Owner = new Player() {Name = "Hellena"}
                 }
             };
+
+            // 여러개를 한번에 추가할때 (AddRange)
+            db.Items.AddRange(items);
+            db.SaveChanges();
         }
     }
 }
