@@ -97,7 +97,8 @@ namespace MMO_EFCore
             int id = int.Parse(Console.ReadLine());
 
             using (AppDbContext db = new AppDbContext()) {
-                
+                Item item = db.Items.Find(id);
+                db.Items.Remove(item);
                 db.SaveChanges();
             }
 
