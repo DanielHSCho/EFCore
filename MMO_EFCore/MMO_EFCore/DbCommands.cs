@@ -66,43 +66,72 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
-        public static void ShowItems()
+        public static void ShowGuild()
         {
             using(AppDbContext db = new AppDbContext()) {
-                foreach(var item in db.Items.Include(i => i.Owner).ToList()) {
-                    if(item.Owner == null) {
-                        Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner(0)");
-                    } else {
-                        Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner({item.Owner.Name}) OwnerName({item.Owner.Name}))");
-                    }
+                foreach(var guild in db.Guilds.Include(g => g.Members).ToList()) {
+                    Console.WriteLine($"GuildId({guild.GuildId}) GuildName({guild.GuildName}) MemberCount({guild.Members.Count})");
                 }
             }
         }
 
-        public static void Update_1v1()
+        public static void Update_1vM()
         {
-            ShowItems();
+            ShowGuild();
 
-            Console.WriteLine("Input ItemSwitch PlayerId");
+            Console.WriteLine("Input GuildId");
             Console.WriteLine("> ");
             int id = int.Parse(Console.ReadLine());
 
             using (AppDbContext db = new AppDbContext()) {
-                Player player = db.Players
-                    .Include(p => p.Item)
-                    .Single(p => p.PlayerId == id);
-
-                if(player.Item != null) {
-                    player.Item.TemplateId = 888;
-                    player.Item.CreateDate = DateTime.Now;
-                }
+                Guild guild = db.Guilds
+                    .Include(p => p.Members)
+                    .Single(p => p.GuildId == id);
 
                 db.SaveChanges();
             }
 
             Console.WriteLine("-- Test Complete --");
-            ShowItems();
+            ShowGuild();
         }
+
+        //public static void ShowItems()
+        //{
+        //    using (AppDbContext db = new AppDbContext()) {
+        //        foreach (var item in db.Items.Include(i => i.Owner).ToList()) {
+        //            if (item.Owner == null) {
+        //                Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner(0)");
+        //            } else {
+        //                Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner({item.Owner.Name}) OwnerName({item.Owner.Name}))");
+        //            }
+        //        }
+        //    }
+        //}
+
+        //public static void Update_1v1()
+        //{
+        //    ShowItems();
+
+        //    Console.WriteLine("Input ItemSwitch PlayerId");
+        //    Console.WriteLine("> ");
+        //    int id = int.Parse(Console.ReadLine());
+
+        //    using (AppDbContext db = new AppDbContext()) {
+        //        Player player = db.Players
+        //            .Include(p => p.Item)
+        //            .Single(p => p.PlayerId == id);
+
+        //        if(player.Item != null) {
+        //            player.Item.TemplateId = 888;
+        //            player.Item.CreateDate = DateTime.Now;
+        //        }
+
+        //        db.SaveChanges();
+        //    }
+
+        //    Console.WriteLine("-- Test Complete --");
+        //    ShowItems();
+        //}
 
         //public static void Test()
         //{
