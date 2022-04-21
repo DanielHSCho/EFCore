@@ -76,7 +76,26 @@ namespace MMO_EFCore
 
         public static void UpdateByReload()
         {
-            
+            ShowGuilds();
+
+            // 외부에서 수정 원하는 데이터의 Id와 정보를 넘겨줬다고 가정
+            Console.WriteLine("Input GuildId");
+            Console.WriteLine("> ");
+            int id = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Input GuildName");
+            Console.WriteLine("> ");
+            string name = Console.ReadLine();
+
+            using (AppDbContext db = new AppDbContext()) {
+                // 가장 빠른 방법 - Find의 id가 프라이머리키이기 때문에
+                Guild guild = db.Find<Guild>(id);
+                guild.GuildName = name;
+                db.SaveChanges();
+            }
+
+            Console.WriteLine("--- Update Complete ---");
+            ShowGuilds();
         }
 
         public static void UpdateByFull()
