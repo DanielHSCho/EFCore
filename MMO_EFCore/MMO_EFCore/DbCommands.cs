@@ -98,7 +98,7 @@ namespace MMO_EFCore
 
             using (AppDbContext db = new AppDbContext()) {
                 Item item = db.Items.Find(id);
-                db.Items.Remove(item);
+                item.SoftDeleted = true;
                 db.SaveChanges();
             }
 
