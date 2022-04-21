@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,9 +99,27 @@ namespace MMO_EFCore
             ShowGuilds();
         }
 
+        public static string MakeUpdateJsonStr()
+        {
+            // 원래는 클라쪽에서 만들어서 보내줘야 함
+            var jsonStr = "{\"GuildId\":1, \"GuildName\":\"Hello\", \"Members\":null}";
+            return jsonStr;
+        }
+
         public static void UpdateByFull()
         {
-           
+            ShowGuilds();
+
+            string jsonStr = MakeUpdateJsonStr();
+            Guild guild = JsonConvert.DeserializeObject<Guild>(jsonStr);
+
+            using (AppDbContext db = new AppDbContext()) {
+                db.Guilds.Update(guild);
+                db.SaveChanges();
+            }
+
+            Console.WriteLine("--- Update Complete ---");
+            ShowGuilds();
         }
 
         //public static void UpdateTest()
