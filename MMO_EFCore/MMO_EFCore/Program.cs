@@ -10,7 +10,7 @@ namespace MMO_EFCore
 
             Console.WriteLine("명령어를 입력하세요");
             Console.WriteLine("[0] Force Reset");
-            Console.WriteLine("[1] Test");
+            Console.WriteLine("[1] Update_1v1");
 
             while (true) {
                 Console.Write("> ");

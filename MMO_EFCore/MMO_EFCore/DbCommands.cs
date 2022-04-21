@@ -92,6 +92,11 @@ namespace MMO_EFCore
                     .Include(p => p.Item)
                     .Single(p => p.PlayerId == id);
 
+                player.Item = new Item() {
+                    TemplateId = 777,
+                    CreateDate = DateTime.Now
+                };
+
                 db.SaveChanges();
             }
 
