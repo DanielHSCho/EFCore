@@ -65,6 +65,15 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
+        public static void ShowGuilds()
+        {
+            using(AppDbContext db = new AppDbContext()) {
+                foreach(var guild in db.Guilds.MapGuildToDto()) {
+                    Console.WriteLine($"GuildId({guild.GuildId}) GuildName({guild.Name})) MemberCount({guild.MemberCount})");
+                }
+            }
+        }
+
         public static void UpdateByReload()
         {
             

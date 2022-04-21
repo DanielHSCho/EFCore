@@ -43,6 +43,7 @@ namespace MMO_EFCore
     // TODO : 다른 파일로 분리해두는 것도 좋음
     public class GuildDto
     {
+        public int GuildId { get; set; }
         public string Name { get; set; }
         public int MemberCount { get; set; }
     }
