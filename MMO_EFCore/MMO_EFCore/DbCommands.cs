@@ -66,61 +66,61 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
-        public static void ShowGuilds()
-        {
-            using(AppDbContext db = new AppDbContext()) {
-                foreach(var guild in db.Guilds.MapGuildToDto()) {
-                    Console.WriteLine($"GuildId({guild.GuildId}) GuildName({guild.Name})) MemberCount({guild.MemberCount})");
-                }
-            }
-        }
+        //public static void ShowGuilds()
+        //{
+        //    using(AppDbContext db = new AppDbContext()) {
+        //        foreach(var guild in db.Guilds.MapGuildToDto()) {
+        //            Console.WriteLine($"GuildId({guild.GuildId}) GuildName({guild.Name})) MemberCount({guild.MemberCount})");
+        //        }
+        //    }
+        //}
 
-        public static void UpdateByReload()
-        {
-            ShowGuilds();
+        //public static void UpdateByReload()
+        //{
+        //    ShowGuilds();
 
-            // 외부에서 수정 원하는 데이터의 Id와 정보를 넘겨줬다고 가정
-            Console.WriteLine("Input GuildId");
-            Console.WriteLine("> ");
-            int id = int.Parse(Console.ReadLine());
+        //    // 외부에서 수정 원하는 데이터의 Id와 정보를 넘겨줬다고 가정
+        //    Console.WriteLine("Input GuildId");
+        //    Console.WriteLine("> ");
+        //    int id = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Input GuildName");
-            Console.WriteLine("> ");
-            string name = Console.ReadLine();
+        //    Console.WriteLine("Input GuildName");
+        //    Console.WriteLine("> ");
+        //    string name = Console.ReadLine();
 
-            using (AppDbContext db = new AppDbContext()) {
-                // 가장 빠른 방법 - Find의 id가 프라이머리키이기 때문에
-                Guild guild = db.Find<Guild>(id);
-                guild.GuildName = name;
-                db.SaveChanges();
-            }
+        //    using (AppDbContext db = new AppDbContext()) {
+        //        // 가장 빠른 방법 - Find의 id가 프라이머리키이기 때문에
+        //        Guild guild = db.Find<Guild>(id);
+        //        guild.GuildName = name;
+        //        db.SaveChanges();
+        //    }
 
-            Console.WriteLine("--- Update Complete ---");
-            ShowGuilds();
-        }
+        //    Console.WriteLine("--- Update Complete ---");
+        //    ShowGuilds();
+        //}
 
-        public static string MakeUpdateJsonStr()
-        {
-            // 원래는 클라쪽에서 만들어서 보내줘야 함
-            var jsonStr = "{\"GuildId\":1, \"GuildName\":\"Hello\", \"Members\":null}";
-            return jsonStr;
-        }
+        //public static string MakeUpdateJsonStr()
+        //{
+        //    // 원래는 클라쪽에서 만들어서 보내줘야 함
+        //    var jsonStr = "{\"GuildId\":1, \"GuildName\":\"Hello\", \"Members\":null}";
+        //    return jsonStr;
+        //}
 
-        public static void UpdateByFull()
-        {
-            ShowGuilds();
+        //public static void UpdateByFull()
+        //{
+        //    ShowGuilds();
 
-            string jsonStr = MakeUpdateJsonStr();
-            Guild guild = JsonConvert.DeserializeObject<Guild>(jsonStr);
+        //    string jsonStr = MakeUpdateJsonStr();
+        //    Guild guild = JsonConvert.DeserializeObject<Guild>(jsonStr);
 
-            using (AppDbContext db = new AppDbContext()) {
-                db.Guilds.Update(guild);
-                db.SaveChanges();
-            }
+        //    using (AppDbContext db = new AppDbContext()) {
+        //        db.Guilds.Update(guild);
+        //        db.SaveChanges();
+        //    }
 
-            Console.WriteLine("--- Update Complete ---");
-            ShowGuilds();
-        }
+        //    Console.WriteLine("--- Update Complete ---");
+        //    ShowGuilds();
+        //}
 
         //public static void UpdateTest()
         //{
