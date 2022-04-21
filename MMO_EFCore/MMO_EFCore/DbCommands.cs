@@ -79,27 +79,46 @@ namespace MMO_EFCore
             }
         }
 
-        // TEST : Dependent 데이터가 Principal 데이터 없이 존재할 수 있는지
-        public static void Test()
+        public static void Update_1v1()
         {
             ShowItems();
 
-            Console.WriteLine("Input Delete PlayerId");
+            Console.WriteLine("Input ItemSwitch PlayerId");
             Console.WriteLine("> ");
             int id = int.Parse(Console.ReadLine());
 
-            using(AppDbContext db = new AppDbContext()) {
+            using (AppDbContext db = new AppDbContext()) {
                 Player player = db.Players
                     .Include(p => p.Item)
                     .Single(p => p.PlayerId == id);
 
-                db.Players.Remove(player);
                 db.SaveChanges();
             }
 
             Console.WriteLine("-- Test Complete --");
             ShowItems();
         }
+
+        //public static void Test()
+        //{
+        //    ShowItems();
+
+        //    Console.WriteLine("Input Delete PlayerId");
+        //    Console.WriteLine("> ");
+        //    int id = int.Parse(Console.ReadLine());
+
+        //    using(AppDbContext db = new AppDbContext()) {
+        //        Player player = db.Players
+        //            .Include(p => p.Item)
+        //            .Single(p => p.PlayerId == id);
+
+        //        db.Players.Remove(player);
+        //        db.SaveChanges();
+        //    }
+
+        //    Console.WriteLine("-- Test Complete --");
+        //    ShowItems();
+        //}
 
         //public static void ShowGuilds()
         //{
