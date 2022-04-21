@@ -69,7 +69,7 @@ namespace MMO_EFCore
         public static void ShowItems()
         {
             using (AppDbContext db = new AppDbContext()) {
-                foreach (var item in db.Items.Include(i => i.Owner).ToList()) {
+                foreach (var item in db.Items.Include(i => i.Owner).IgnoreQueryFilters().ToList()) {
                     if (item.Owner == null) {
                         Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner(0)");
                     } else {
