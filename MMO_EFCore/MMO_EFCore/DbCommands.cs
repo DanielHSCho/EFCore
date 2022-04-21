@@ -66,10 +66,12 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
+        // Note : 삭제된 아이템 포함 : db.Items.Include(i => i.Owner).IgnoreQueryFilters().ToList()
         public static void ShowItems()
         {
             using (AppDbContext db = new AppDbContext()) {
-                foreach (var item in db.Items.Include(i => i.Owner).IgnoreQueryFilters().ToList()) {
+
+                foreach (var item in db.Items.Include(i => i.Owner).ToList()) {
                     if (item.Owner == null) {
                         Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner(0)");
                     } else {
