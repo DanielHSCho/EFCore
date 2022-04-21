@@ -88,6 +88,10 @@ namespace MMO_EFCore
                     .Include(p => p.Members)
                     .Single(p => p.GuildId == id);
 
+                guild.Members.Add(new Player() {
+                    Name = "Dopa"
+                });
+
                 db.SaveChanges();
             }
 
