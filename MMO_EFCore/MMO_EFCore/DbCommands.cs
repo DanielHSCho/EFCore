@@ -66,6 +66,19 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
+        public static void ShowItems()
+        {
+            using (AppDbContext db = new AppDbContext()) {
+                foreach (var item in db.Items.Include(i => i.Owner).ToList()) {
+                    if (item.Owner == null) {
+                        Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner(0)");
+                    } else {
+                        Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner({item.Owner.Name}) OwnerName({item.Owner.Name}))");
+                    }
+                }
+            }
+        }
+
         public static void ShowGuild()
         {
             using(AppDbContext db = new AppDbContext()) {
@@ -75,41 +88,46 @@ namespace MMO_EFCore
             }
         }
 
-        public static void Update_1vM()
+        public static void TestDelete()
         {
-            ShowGuild();
+            ShowItems();
 
-            Console.WriteLine("Input GuildId");
+            Console.WriteLine("Select Delete ItemId");
             Console.WriteLine("> ");
             int id = int.Parse(Console.ReadLine());
 
             using (AppDbContext db = new AppDbContext()) {
-                Guild guild = db.Guilds
-                    .Include(p => p.Members)
-                    .Single(p => p.GuildId == id);
-
-                guild.Members.Add(new Player() {
-                    Name = "Dopa"
-                });
-
+                
                 db.SaveChanges();
             }
 
-            Console.WriteLine("-- Test Complete --");
-            ShowGuild();
+            Console.WriteLine("-- Test Delete Complete --");
+            ShowItems();
         }
 
-        //public static void ShowItems()
+
+        //public static void Update_1vM()
         //{
+        //    ShowGuild();
+
+        //    Console.WriteLine("Input GuildId");
+        //    Console.WriteLine("> ");
+        //    int id = int.Parse(Console.ReadLine());
+
         //    using (AppDbContext db = new AppDbContext()) {
-        //        foreach (var item in db.Items.Include(i => i.Owner).ToList()) {
-        //            if (item.Owner == null) {
-        //                Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner(0)");
-        //            } else {
-        //                Console.WriteLine($"ItemId({item.ItemId}) TemplateId({item.TemplateId}) Owner({item.Owner.Name}) OwnerName({item.Owner.Name}))");
-        //            }
-        //        }
+        //        Guild guild = db.Guilds
+        //            .Include(p => p.Members)
+        //            .Single(p => p.GuildId == id);
+
+        //        guild.Members.Add(new Player() {
+        //            Name = "Dopa"
+        //        });
+
+        //        db.SaveChanges();
         //    }
+
+        //    Console.WriteLine("-- Test Complete --");
+        //    ShowGuild();
         //}
 
         //public static void Update_1v1()
