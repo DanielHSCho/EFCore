@@ -66,6 +66,12 @@ namespace MMO_EFCore
             db.SaveChanges();
         }
 
+        // Dependent 데이터가 Principal 데이터 없이 존재할 수 있는지
+        public static void Test()
+        {
+
+        }
+
         //public static void ShowGuilds()
         //{
         //    using(AppDbContext db = new AppDbContext()) {
